@@ -1,0 +1,65 @@
+#sound {
+  border-radius: 3px;
+  padding: 1px;
+  right: 1rem;
+  position: fixed;
+  z-index: 999;
+  top: .5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: var(--clr-neutral-300);
+  font-size: var(--fs-sound);
+  pointer-events: none;
+  background: transparent;
+  font-family: var(--ff-primary);
+}
+
+#sound svg {
+  height: 20px;
+  margin-right: 5px;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+#sound svg path {
+  fill: var(--clr-sound-off);
+}
+
+#sound button {
+  color: var(--clr-sound-off);
+  background: transparent;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
+  margin-left: 5px;
+  pointer-events: auto;
+  font-family: var(--ff-primary);
+}
+
+#sound button:before {
+  content: 'OFF';
+}
+
+#sound button.activated:before {
+  content: 'ON';
+}
+
+#audio.activated{
+  color: var(--clr-sound-on);
+}
+
+#sound.activated svg path {
+  fill: var(--clr-sound-on);
+}
+
+@media screen and (max-width: 800px){
+  #sound {
+    right: 65vw;
+  }
+}
