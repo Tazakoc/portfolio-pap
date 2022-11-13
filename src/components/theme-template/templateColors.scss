@@ -1,0 +1,188 @@
+ /* Light theme */
+ .wrapper.light-mode {
+  --clr-accent: #1b1b1b !important;
+  --clr-accent-hover: #4d4d4d;
+
+  --clr-primary: #504d4b;
+  --clr-primary-bg: #f2f3f5;
+
+  --clr-neutral-200: #DADDE1;
+  --clr-neutral-300: #606060;
+  --clr-neutral-400: rgba(83, 83, 83, 0.76);
+  --clr-neutral-500: #2b2b2b;
+  --clr-neutral-600: #f2f3f5;
+  --clr-neutral-700: #fff;
+  --clr-neutral-800: rgba(65, 65, 65, 0.068);
+  --clr-neutral-900: #1C1E21;
+
+  .section-home canvas{
+    display: none;
+  }
+
+  .navbar {
+    box-shadow: var(--clr-box-shadow);
+  }
+
+  .navbar-logo {
+    box-shadow: var(--clr-box-shadow);
+  }
+
+  .grid figure, .grid-wall figure {
+    background: rgba(0, 0, 0, 0.9);
+    opacity: 1
+  }
+
+  .flat-button:hover, .flat-button-2:hover{
+    color: var(--clr-neutral-200);
+  }
+}
+
+// Template mode styles
+#template-1 {
+  --clr-accent: purple;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-2 {
+  --clr-accent: #c3073f;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-3 {
+  --clr-accent: #f13c20;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-4 {
+  --clr-accent: #3aafa9;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-5 {
+  --clr-accent: #116466;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-6 {
+  --clr-accent: #240090;
+
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+#template-7 {
+  --clr-accent: #86c232;
+  
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__border-color,
+  .active-mode {
+    border: 1px solid var(--clr-accent);
+  }
+
+  .switch__stroke-color {
+    stroke: var(--clr-accent);
+  }
+
+  .fancybox__caption div a {
+    background: var(--clr-accent);
+  }
+}
+
+// switch the text colors to whichever you like

@@ -1,2 +1,1 @@
-# The template made by developer Jack (https://jacekjeznach.com/).
-# I re-created for educational purposes only.
+# I created it for educational purposes only.

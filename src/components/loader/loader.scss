@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600');
-
 .loader *{
   margin:0;
   padding:0;
   font-family: 'Coolvetica', sans-serif;
   box-sizing: border-box;
   animation-timing-function: ease;
-  right: 60px;
 }
 
 .loader {
@@ -15,6 +12,7 @@
   align-items:center;
   height:100vh;
   overflow:hidden;
+  margin-left: -130px;
 }
 
 #wrapper{
@@ -25,7 +23,7 @@
   transform:scale(1);
   opacity:1;
   transform-origin:center -80%;
-  background-color: #1d1d1d;
+  
   
   @keyframes out{
     0%{
@@ -43,15 +41,15 @@
     position:absolute;
     top:-120px;
     left:calc(50% - 35px);
-    border: 5px solid #181818;
+    border: 5px solid #fff;
     border-radius: 50%;
-    border-top-color: purple;
+    border-top-color: var(--clr-accent);
     height: 70px;
     width: 70px;
     display:flex;
     justify-content:center;
     align-items:center;
-    
+    margin-left: 0;
     @keyframes rotation {
       0% {
         transform: rotate(0);
@@ -60,8 +58,8 @@
         transform: rotate(500deg);
       }
       95%{
-        border: 5px solid #181818;
-        border-top-color: purple;
+        border: 5px solid #fff;
+        border-top-color: var(--clr-accent);
       }
       100%{
         transform: rotate(1800deg);
@@ -153,7 +151,7 @@
       font-size:20px;
       animation:mouse-cont 2s forwards;
       animation-delay:1.7s;
-      color: rgba(205, 205, 205, 1);
+      color: var(--clr-primary);
       text-shadow:0 1px 10px rgba(0,0,0,0.3);
       
       @keyframes mouse-cont{
@@ -194,7 +192,6 @@
       animation-delay:1.7s;
       opacity:0;
       transform:scale(0);
-      
       // since adding the same animations 2 times resulted in a weird look of the circle, i created 1 animation with both animations in it.
       
       @keyframes circle{
@@ -226,14 +223,14 @@
   .loading-bar{
     width:100%;
     height:30px;
-    background:#181818;
+    background:#dfe6e9;
     border-radius:5px;
 
     .progress-bar{
       animation:progress 3.5s forwards;
       width:6%;
       height:100%;
-      background:purple;
+      background: var(--clr-accent);
       border-radius:5px;
       border:0 solid #0abde3;
       
@@ -263,7 +260,7 @@
   
   .status{
     margin-top:10px;
-    
+    color: var(--clr-accent);
     .state{
       float:left;
       font-size:0.9em;
@@ -280,7 +277,6 @@
         top:0;
         animation: fadeLeft .5s forwards ease;
         animation-delay:3.2s;
-        color: gray;
         
         @keyframes fadeLeft{
           0%{
@@ -302,8 +298,7 @@
         opacity:0;
         animation: fadeLeft2 .5s forwards ease;
         animation-delay:3.2s;
-        color: gray;
-
+        
         @keyframes fadeLeft2{
           0%{
             text-indent:100px;
@@ -319,7 +314,7 @@
     
     .percentage{
       float:right;
-      color: gray;
+
       &:before{
         -webkit-animation: percentage-slow 3s forwards, percentage-fast .4s forwards;
         -webkit-animation-delay: 0s, 3s;
@@ -344,5 +339,17 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 40em){
+  .loader {
+    margin-left: 0px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+  .loader {
+    margin-left: 0px;
   }
 }

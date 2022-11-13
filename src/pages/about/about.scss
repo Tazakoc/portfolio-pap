@@ -1,0 +1,551 @@
+// Animations
+@use "sass:math";
+.text-animate-about {
+  display: inline-block;
+  opacity: 1;
+  animation: bounce-in 1s 1s;
+  animation-fill-mode: forwards;
+  color: var(--clr-accent);
+  margin: 0;
+  font-weight: 600;
+  font-size: var(--fs-800);
+  line-height: 6.7rem;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  display: inline-block;
+  font-family: var(--ff-title);
+  z-index: 2;
+  margin-left: 5px;
+  letter-spacing: 0px
+}
+
+@for $i from 1 through 35 {
+  .text-animate-about._#{$i} {
+    animation-delay: #{$i / 10}s;
+  }
+}
+
+/* Tags */
+.about h1:before {
+  content: '<h1>';
+  font-family: var(--ff-tag);
+  color: var(--clr-neutral-400);
+  font-size: var(--fs-tag);
+  position: absolute;
+  margin-top: .1rem;
+  left: -20px;
+}
+
+.about h1:after {
+  content: '<h1/>';
+  font-family: var(--ff-tag);
+  color: var(--clr-neutral-400);
+  font-size: var(--fs-tag);
+  position: absolute;
+  margin-top: 5rem;
+  margin-left: -39rem;
+}
+
+/* Button */
+.about .flat-button {
+  color: var(--clr-accent);
+  font-size: var(--fs-button);
+  font-family: var(--ff-primary);
+  letter-spacing: 4px;
+  text-decoration: none;
+  margin-top: 40px;
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  height: 50px;
+  line-height: 50px;
+  display: block;
+  text-align: center;
+}
+
+.about .flat-button div {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.about .flat-button:hover {
+  color: var(--clr-neutral-900);
+}
+
+.about .flat-button span.bg {
+  left: -5%;
+  position: absolute;
+  background: var(--clr-accent);
+  width: 0;
+  height: 100%;
+  z-index: 3;
+  -webkit-transition: 0.3s ease-out all;
+  -o-transition: 0.3s ease-out all;
+  transition: 0.3s ease-out all;
+  -webkit-transform: skewX(-10deg);
+  -ms-transform: skewX(-10deg);
+  transform: skewX(-10deg);
+}
+
+.about .flat-button:hover span.bg {
+  width: 110%;
+}
+
+.about .flat-button:hover span.text:after {
+  background: var(--clr-accent);
+}
+
+.about .flat-button span.base {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  border: 1px solid var(--clr-accent);
+}
+
+.about .flat-button span.text {
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  font-family: var(--ff-button);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.about .flat-button span.text:after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  right: 0;
+  bottom: 0;
+  background: var(--clr-accent);
+  position: absolute;
+  -webkit-transition: 0.3s ease-out all;
+  -o-transition: 0.3s ease-out all;
+  transition: 0.3s ease-out all;
+  z-index: 5;
+}
+
+/* About */
+.about {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.about h1 {
+  color: var(--clr-primary);
+  margin: 0;
+  font-weight: 400;
+  font-size: var(--fs-primary-heading);
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.about .text-zone {
+  position: relative;
+  z-index: 1;
+  padding-left: 5rem;
+  margin-top: 25vh;
+}
+
+.about .text-zone h1 .blast:hover{
+  color: var(--clr-accent);
+  animation-name: rubberBand;
+  
+}
+
+:-webkit-any(article, aside, nav, section) .text-zone h1 {
+  font-size: 1.5em;
+}
+
+.about .blast{
+  color: var(--clr-accent);
+  margin: 0;
+  font-weight: 600;
+  font-size: 5rem;
+  line-height: 6.7rem;
+  position: relative;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  display: inline-block;
+  font-family: var(--ff-title);
+  z-index: 2;
+  margin-left: 5px;
+  letter-spacing: 0px
+}
+
+.about p{
+  position: relative;
+  font-family: var(--ff-primary);
+  font-size: 1rem;
+  color: var(--clr-primary);
+  max-width: 65%;
+}
+
+.about a {
+  color: var(--clr-accent);
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.about a:hover {
+  color: var(--clr-accent-hover);
+}
+
+.about .skill-charts {
+  display: flex;
+  justify-content: center;
+  margin-top: 25vh;
+}
+
+.about .tagcloud{
+  font-size: var(--fs-500);
+  font-family: var(--ff-primary); 
+  margin: auto;
+  left: -10rem;
+}
+
+.about .skill-charts-mobile{
+  display: none;
+}
+
+.about .tagcloud--item:hover {
+  color: var(--clr-neutral-400); 
+}
+
+.skill-charts #tagcloudMobile{
+  display:none;
+}
+
+
+@media (max-width: 40em){
+  // Animations
+  .text-animate-about {
+    font-size: 40px;
+    line-height: 1px;
+    margin-left: 2px;
+    letter-spacing: -1px;
+    bottom: 20px;
+  }
+
+  .about br{
+    display: block;
+    content: ""; 
+    margin-top: .5rem;
+  }
+
+  /* Tags */
+  .about h1:before {
+    margin-left: .5rem;
+    margin-top: -3.5rem;
+  }
+
+  .about h1:after {
+    margin-top: -.8rem;
+    margin-left: -17.3rem;
+  }
+
+  .about .text-zone p:first-of-type:before {
+    margin-top: -1.5rem;
+    margin-left: 0rem;
+  }
+
+  .about .text-zone p:last-of-type:after {
+    left: -1rem;
+  }
+
+  #about-bottom-tags{
+    bottom: -15rem;
+  }
+
+  /* Button  */
+  .about .flat-button {
+    font-size: var(--fs-button);
+    letter-spacing: 2px;
+    max-width: 140px;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  /* About */
+  .about{
+    padding-left: 0rem;
+    flex-direction: column;
+    top: 200px;
+    overflow: auto;
+    -ms-overflow-style: scroll;
+  }
+
+  .about .text-zone{
+    padding-left: 30px;
+    margin-top: 50px;
+  }
+
+  .about .blast{
+    font-size: 40px;
+    line-height: 1px;
+    margin-left: 2px;
+    letter-spacing: -1px;
+    bottom: 20px;
+  }
+
+  .about p{
+    font-size: var(--fs-body);
+    max-width: 95%;
+    margin-top: 35px;
+    margin-bottom: 50px;
+  }
+
+  .about .tagcloud{
+    font-size: var(--fs-400);
+    font-family: var(--ff-primary);
+    margin: auto;
+    left: 0px;
+  }
+
+  .skill-charts #tagcloud{
+    display: none;
+  }
+
+  .skill-charts #tagcloudMobile{
+    display: block;
+  }
+
+  .skill-charts #tagcloudMobile .tagcloud{
+    font-size: 15px;
+  }
+
+  #tagcloudMobile .tagcloud--item{
+    color: purple;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+   // Animations
+   .text-animate-about {
+    font-size: var(--fs-secondary-heading);
+    line-height: .5px;
+    margin-left: 2px;
+    letter-spacing: -1px;
+    bottom: 20px;
+  }
+
+  .about br{
+    display: block;
+    content: ""; 
+    margin-top: .5rem;
+  }
+
+  /* Tags */
+  .about h1:before {
+    margin-left: .5rem;
+    margin-top: -2.5rem;
+  }
+
+  .about h1:after {
+    margin-top: -4.5rem;
+    margin-left: -23.4rem;
+  }
+
+  .about .text-zone p:first-of-type:before {
+    margin-top: -1.5rem;
+    margin-left: 0rem;
+  }
+
+  .about .text-zone p:last-of-type:after {
+    left: -1rem;
+  }
+
+  #about-bottom-tags{
+    bottom: 2rem;
+  }
+
+  /* Button  */
+  .about .flat-button {
+    font-size: var(--fs-button);
+    letter-spacing: 2px;
+    max-width: 140px;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  /* About */
+  .about{
+    padding-left: 0rem;
+    flex-direction: column;
+    top: 200px;
+    overflow: auto;
+    -ms-overflow-style: scroll;
+  }
+
+  .about .text-zone{
+    padding-left: 30px;
+    margin-top: 50px;
+  }
+
+  .about .blast{
+    font-size: var(--fs-secondary-heading);
+    line-height: .5px;
+    margin-left: 2px;
+    letter-spacing: -1px;
+    bottom: 20px;
+  }
+
+  .about p{
+    font-size: var(--fs-body);
+    max-width: 95%;
+    margin-top: 40px;
+  }
+
+  .about .tagcloud{
+    font-size: var(--fs-400);
+    font-family: var(--ff-primary);
+    margin: auto;
+    left: 0px;
+  }
+
+  .about .skill-charts {
+    margin-top: 5vh;
+  }
+
+  .skill-charts #tagcloud{
+    display: none;
+  }
+
+  .skill-charts #tagcloudMobile{
+    display: block;
+  }
+
+  .skill-charts #tagcloudMobile .tagcloud{
+    font-size: 15px;
+  }
+
+  #tagcloudMobile .tagcloud--item{
+    color: purple;
+  }
+}
+
+// Tablet Portrait
+@media (min-width: 768px) and (max-width: 1200px) and (orientation: landscape) {
+  // Animations
+  .text-animate-about {
+   font-size: var(--fs-secondary-heading);
+   line-height: .5px;
+   margin-left: 2px;
+   letter-spacing: -1px;
+   bottom: 20px;
+ }
+
+ .about br{
+   display: block;
+   content: ""; 
+   margin-top: .5rem;
+ }
+
+ /* Tags */
+ .about h1:before {
+   margin-left: .5rem;
+   margin-top: -2.5rem;
+ }
+
+ .about h1:after {
+   margin-top: -4.5rem;
+   margin-left: -23.4rem;
+ }
+
+ .about .text-zone p:first-of-type:before {
+   margin-top: -1.5rem;
+   margin-left: 0rem;
+ }
+
+ .about .text-zone p:last-of-type:after {
+   left: -1rem;
+ }
+
+ #about-bottom-tags{
+   bottom: -10rem;
+ }
+
+ /* Button  */
+ .about .flat-button {
+   font-size: var(--fs-button);
+   letter-spacing: 2px;
+   max-width: 140px;
+   height: 40px;
+   line-height: 40px;
+ }
+
+ /* About */
+ .about{
+   padding-left: 0rem;
+   flex-direction: column;
+   top: 200px;
+   overflow: auto;
+   -ms-overflow-style: scroll;
+ }
+
+ .about .text-zone{
+   padding-left: 30px;
+   margin-top: 50px;
+ }
+
+ .about .blast{
+   font-size: var(--fs-secondary-heading);
+   line-height: .5px;
+   margin-left: 2px;
+   letter-spacing: -1px;
+   bottom: 20px;
+ }
+
+ .about p{
+   font-size: var(--fs-body);
+   max-width: 95%;
+   margin-top: 40px;
+ }
+
+ .about .tagcloud{
+   font-size: var(--fs-400);
+   font-family: var(--ff-primary);
+   margin: auto;
+   left: 0px;
+ }
+
+ .about .skill-charts {
+   margin-top: 5vh;
+ }
+
+ .skill-charts #tagcloud{
+   display: none;
+ }
+
+ .skill-charts #tagcloudMobile{
+   display: block;
+ }
+
+ .skill-charts #tagcloudMobile .tagcloud{
+   font-size: 15px;
+ }
+
+ #tagcloudMobile .tagcloud--item{
+   color: purple;
+ }
+}

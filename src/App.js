@@ -1,34 +1,35 @@
-// CSS
-import './App.css';
-
 // Components
 import Index from "./Index.jsx"
 import Navbar from "./components/navbar/Navbar"
 import Music from "./components/sound/Sound"
 import Rights from "./components/rights/Rights"
 import Loader from "./components/loader/Loader"
+import Template from "./components/theme-template/Template"
 
 // Dependencies
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { lazy, Suspense} from "react"
 import pMinDelay from 'p-min-delay';
+import { useGLobalContext } from './hooks/contextAPI'
 
 function App() {
-  const About = lazy(() => pMinDelay(import('./components/about/About'), 0)); //5000
-  const Skills = lazy(() => pMinDelay(import('./components/skills/Skills'), 0));
-  const Portfolio = lazy(() => pMinDelay(import('./components/portfolio/Portfolio'), 0));
-  const Contact = lazy(() => pMinDelay(import('./components/contact/Contact'), 0));
+  const colorTheme = lazy(() => pMinDelay(useGLobalContext, 0));
+
+  const About = lazy(() => pMinDelay(import('./pages/about/About'), 5000)); //5000
+  const Skills = lazy(() => pMinDelay(import('./pages/skills/Skills'), 5000));
+  const Portfolio = lazy(() => pMinDelay(import('./pages/portfolio/Portfolio'), 5000));
+  const Contact = lazy(() => pMinDelay(import('./pages/contact/Contact'), 5000));
+
   return (
-    <div>
+    <div style={{backgroundColor: colorTheme === 'light-mode' ? "var(--clr-primary-bg)" : "var(--clr-primary-bg)"}}>
       <Router>
         <Navbar/>
         <Music/>
         <Rights/>
+        <Template/>
         <Routes>
           <Route exact path="/" element={
-            <Suspense fallback={<Loader/>}>
-              <Index/>
-            </Suspense>
+            <Index/>
           }/>
           <Route exact path="/about-me" element={
             <Suspense fallback={<Loader/>}>

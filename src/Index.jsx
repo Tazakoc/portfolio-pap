@@ -1,20 +1,35 @@
 // CSS
-import './index.css'
-import DancingLines from './dancinglines.js';
+import './index.scss'
 
 // Work
 import Fancybox from "./components/portfolio/fancybox.js";
 
 // About
-import React from 'react';
 import TagCloud from 'TagCloud'
 
 // Contact
 import Map from "./img/map.png"
-import emailjs from 'emailjs-com'
-import {useRef, useState} from "react"
+import emailjs from '@emailjs/browser'
+import React, {useRef, useState} from "react"
+import { BsExclamationLg, BsPatchCheckFill } from 'react-icons/bs'
+import { RiSendPlane2Fill } from 'react-icons/ri'
+
+// Dependencies
+import DancingLines from './components/dancinglines/dancingLines.js';
+import Reveal from 'react-reveal/Reveal'
+import Fade from 'react-reveal/Fade'
 
 const Index = () => {
+  
+  const [letterClass, setLetterClass] = useState('text-animate')
+  const [letterClassSecondary, setLetterClassSecondary] = useState('text-animate-secondary')
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLetterClass('blast')
+      setLetterClassSecondary('blast')
+    }, 4000)
+  }, [])
 
   // About
   React.useEffect(() => {
@@ -45,9 +60,7 @@ const Index = () => {
       // interact with cursor move on mouse out
       keep: true,
     }); 
-    var colors = ['purple'];
-    var random_color = colors[Math.floor(Math.random() * colors.length)];
-    document.querySelector('.tagcloud').style.color = random_color;
+
 
     var tagCloudMobile = TagCloud('#tagcloudMobile', myTags,{
 
@@ -68,7 +81,6 @@ const Index = () => {
       // interact with cursor move on mouse out
       keep: true,
     }); 
-    document.querySelector('.tagcloudMobile').style.color = random_color;
     
     let rootEl = document.querySelector('.tagcloud');
     rootEl.addEventListener('click', function clickEventHandler(e) {
@@ -79,28 +91,109 @@ const Index = () => {
   }, []);
   
   // Contact
-  const formRef =  useRef()
-  const [done, setDone] = useState(false)
+  const [validInpt, setValidInpt] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  })
 
-  const handleSubmit = (e)=>{
-    e.preventDefault();
-    emailjs
-    .sendForm(
-      'service_intly52', 
-      'template_36jv9vo', 
-      formRef.current, 
-      'user_ZyDjQ54v56b10aXLZDX9s'
-    )
-    .then(
-    (result) => {
-      console.log(result.text);
-      setDone(true)
-    }, 
-    
-    (error) => {
-      console.log(error.text);
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setValidInpt((preValue) => {
+      return { ...preValue, [name]: value }
+    })
+  }
+
+  // select all the input with useRef Hook
+  const emailRef = useRef(null)
+  const TextAreaRef = useRef(null)
+  const MessageRef = useRef(null)
+
+  const formRef = useRef(null)
+
+  // show Message function
+  const showMessage = (message, updateColor) => {
+    const divContent = document.createElement('div')
+    divContent.textContent = message
+    divContent.classList.add('div-content')
+    MessageRef.current.prepend(divContent)
+    divContent.style.backgroundColor = updateColor
+
+    MessageRef.current.style.transform = `translateX(${'0'}%)`
+    MessageRef.current.style.visibility = 'visible'
+    setTimeout(() => {
+      divContent.classList.add('hide')
+      divContent.addEventListener('transitionend', () => {
+        divContent.remove()
+      })
+      divContent.style.transform = `translateX(${'0'}%)`
+      // MessageRef.current.style.visibility = 'visible'
+      emailRef.current.parentElement.classList.remove('error')
+      TextAreaRef.current.parentElement.classList.remove('error')
+      emailRef.current.parentElement.classList.remove('success')
+      TextAreaRef.current.parentElement.classList.remove('success')
+    }, 5000)
+  }
+
+  // Error function
+  const setError = (inputRef) => {
+    if (inputRef.current.parentElement.classList.contains('success')) {
+      inputRef.current.parentElement.classList.remove('success')
+    } else {
+      inputRef.current.parentElement.classList.add('error')
     }
-    );
+  }
+
+  // success Function
+  const setSuccess = (inputRef) => {
+    if (inputRef.current.parentElement.classList.contains('error')) {
+      inputRef.current.parentElement.classList.remove('error')
+    } else {
+      inputRef.current.parentElement.classList.add('success')
+    }
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    
+    const { email, message } = validInpt
+    // const pattern = /^[^]+@[^]+\.[a-z]{2,3}$/
+    const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+    if (!email && !message) {
+      setError(emailRef)
+      setError(TextAreaRef)
+      showMessage('Pls! fill in the required inputs')
+    } else if (!email && message) {
+      setError(emailRef)
+      showMessage("Oops! Email can't be empty")
+    } else if (!email.match(pattern)) {
+      setError(emailRef)
+      showMessage('Oops! Email not valid')
+    } else if (!message && email.match(pattern)) {
+      setError(TextAreaRef)
+      showMessage('Leave a message pls!')    
+    } else if (email && message) {
+      emailjs.sendForm(
+        process.env.REACT_APP_GMAIL_SERVICE_ID,
+        process.env.REACT_APP_FORM_TEMPLATE_ID,
+        formRef.current,
+        process.env.REACT_APP_FORM_USER_ID,
+      ).then((result) => {
+        console.log(result.text);
+        setSuccess(emailRef)
+        setSuccess(TextAreaRef)
+        showMessage('Message sent successfully', 'green')
+      }, (error) => {
+        console.log(error.text);
+      });
+      setValidInpt({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      })
+    }
   }
   
   return (
@@ -114,47 +207,49 @@ const Index = () => {
             <section className="section-home">
               <div className="text-zone">
                 <h1 aria-label="Hi, I'm Kostanstantinos, Engineer" className="blast-root">
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>H</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>i</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>,</span>
+                  <span className={`${letterClass} _1`} aria-hidden="true" style={{opacity:"1"}}>H</span>
+                  <span className={`${letterClass} _2`} aria-hidden="true" style={{opacity:"1"}}>i</span>
+                  <span className={`${letterClass} _3`} aria-hidden="true" style={{opacity:"1"}}>,</span>
                   <br></br>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>I</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>’</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>m</span>
+                  <span className={`${letterClass} _4`} aria-hidden="true" style={{opacity:"1"}}>I</span>
+                  <span className={`${letterClass} _5`} aria-hidden="true" style={{opacity:"1"}}>’</span>
+                  <span className={`${letterClass} _6`} aria-hidden="true" style={{opacity:"1"}}>m</span>
                   &nbsp;
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>K</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>n</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>s</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>t</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>a</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>n</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>t</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>i</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>n</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>s</span>
+                  <span className={`${letterClass} _7`} aria-hidden="true" style={{opacity:"1"}}>K</span>
+                  <span className={`${letterClass} _8`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                  <span className={`${letterClass} _9`} aria-hidden="true" style={{opacity:"1"}}>n</span>
+                  <span className={`${letterClass} _10`} aria-hidden="true" style={{opacity:"1"}}>s</span>
+                  <span className={`${letterClass} _11`} aria-hidden="true" style={{opacity:"1"}}>t</span>
+                  <span className={`${letterClass} _12`} aria-hidden="true" style={{opacity:"1"}}>a</span>
+                  <span className={`${letterClass} _13`} aria-hidden="true" style={{opacity:"1"}}>n</span>
+                  <span className={`${letterClass} _14`} aria-hidden="true" style={{opacity:"1"}}>t</span>
+                  <span className={`${letterClass} _15`} aria-hidden="true" style={{opacity:"1"}}>i</span>
+                  <span className={`${letterClass} _16`} aria-hidden="true" style={{opacity:"1"}}>n</span>
+                  <span className={`${letterClass} _17`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                  <span className={`${letterClass} _18`} aria-hidden="true" style={{opacity:"1"}}>s</span>
                   <br></br>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>D</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>v</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>l</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>p</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
-                  <span className="blast" aria-hidden="true" style={{opacity:"1"}}>r</span>
+                  <span className={`${letterClass} _19`} aria-hidden="true" style={{opacity:"1"}}>D</span>
+                  <span className={`${letterClass} _20`} aria-hidden="true" style={{opacity:"1"}}>e</span>
+                  <span className={`${letterClass} _21`} aria-hidden="true" style={{opacity:"1"}}>v</span>
+                  <span className={`${letterClass} _22`} aria-hidden="true" style={{opacity:"1"}}>e</span>
+                  <span className={`${letterClass} _23`} aria-hidden="true" style={{opacity:"1"}}>l</span>
+                  <span className={`${letterClass} _24`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                  <span className={`${letterClass} _25`} aria-hidden="true" style={{opacity:"1"}}>p</span>
+                  <span className={`${letterClass} _26`} aria-hidden="true" style={{opacity:"1"}}>e</span>
+                  <span className={`${letterClass} _27`} aria-hidden="true" style={{opacity:"1"}}>r</span>
                 </h1>
                 <p className="desc">
                   Msc Electrical & Electronic Engineer
                 </p> 
-                <a rel="contact-me" href="/contact-me" className="flat-button">
-                  <div>
-                    <span className="bg"></span>
-                    <span className="base"></span>
-                    <span className="text">Contact me!</span>
-                  </div>
-                </a>
+                <Reveal>
+                  <a rel="contact-me" href="/contact-me" className="flat-button">
+                    <div>
+                      <span className="bg"></span>
+                      <span className="base"></span>
+                      <span className="text">Contact me!</span>
+                    </div>
+                  </a>
+                </Reveal>
               </div>
               <DancingLines></DancingLines>
               <div className="scroll-down">
@@ -166,116 +261,120 @@ const Index = () => {
                 <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="svg-inline--fa fa-arrow-down fa-w-14 fa-5x"><path fill="currentColor" d="M443.5 248.5l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L241 419.9V44c0-6.6-5.4-12-12-12h-10c-6.6 0-12 5.4-12 12v375.9L28.5 241.4c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.8 4.8-12.3.1-17z" className=""></path></svg>
               </div>
             </section>
-        
-
 
             <section className="section-work">
-              <div className="fake-big">Work</div>
+              <Reveal>
+                <div className="fake-big">Work</div>
+              </Reveal>
               <div className="text-zone">
                 <div>
                   <header>
                     <h2 aria-label="My Portfolio" className="blast-root">
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>M</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>y</span>
+                      <span className={`${letterClassSecondary} _1`} aria-hidden="true" style={{opacity:"1"}}>M</span>
+                      <span className={`${letterClassSecondary} _2`} aria-hidden="true" style={{opacity:"1"}}>y</span>
                       &nbsp;
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>P</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>r</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>t</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>f</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>l</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>i</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
+                      <span className={`${letterClassSecondary} _3`} aria-hidden="true" style={{opacity:"1"}}>P</span>
+                      <span className={`${letterClassSecondary} _4`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                      <span className={`${letterClassSecondary} _5`} aria-hidden="true" style={{opacity:"1"}}>r</span>
+                      <span className={`${letterClassSecondary} _6`} aria-hidden="true" style={{opacity:"1"}}>t</span>
+                      <span className={`${letterClassSecondary} _7`} aria-hidden="true" style={{opacity:"1"}}>f</span>
+                      <span className={`${letterClassSecondary} _8`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                      <span className={`${letterClassSecondary} _9`} aria-hidden="true" style={{opacity:"1"}}>l</span>
+                      <span className={`${letterClassSecondary} _10`} aria-hidden="true" style={{opacity:"1"}}>i</span>
+                      <span className={`${letterClassSecondary} _11`} aria-hidden="true" style={{opacity:"1"}}>o</span>
                     </h2>
                   </header>
-                  <p>
-                  Check out some of my latest work in a small gallery. I have worked on various projects as a student but have no further experience so I do not have projects in a production.
-                  You have to be patient to see my growth. Coming Soon..
-                  <br></br>
-                  Interested to see some more?  Visit 
-                  <a rel="work" href="/my-portfolio/"> my work</a> page.
-                  </p>
+                  <Fade bottom>
+                    <p>
+                    Check out some of my latest work in a small gallery. I have worked on various projects as a student but have no further experience so I do not have projects in a production.
+                    You have to be patient to see my growth. Coming Soon..
+                    <br></br>
+                    Interested to see some more?  Visit 
+                    <a rel="work" href="/my-portfolio/"> my work</a> page.
+                    </p>
+                  </Fade>
                 </div>
               </div>
             </section>
-
-            <div id="grid" className="grid">
-              <Fancybox>    
-                <div className="grid-item">
-                  <figure className="hover-content">
-                    <img src="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" alt=''/>
-                    <figcaption>
-                      <div>
-                        <h2>Coming <span>Soon</span></h2>
-                        <p>Coming Soon...</p>
-                      </div>
-                      <a 
-                        data-fancybox="Coming Soon 2" 
-                        href="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" 
-                        data-caption="
+            <Fade bottom>
+              <div id="grid" className="grid">
+                <Fancybox>    
+                  <div className="grid-item">
+                    <figure className="hover-content">
+                      <img src="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" alt=''/>
+                      <figcaption>
                         <div>
-                          <a href='http://google.com'>Coming Soon!</a>
-                        </div>">
-                      </a>
-                    </figcaption>	
-                  </figure>
-                </div>
-                <div className="grid-item">
-                  <figure className="hover-content">
-                    <img src="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" alt=''/>
-                    <figcaption>
-                      <div>
-                        <h2>Coming <span>Soon</span></h2>
-                        <p>Coming Soon...</p>
-                      </div>
-                      <a 
-                        data-fancybox="Coming Soon" 
-                        href="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" 
-                        data-caption="
+                          <h2>Coming <span>Soon</span></h2>
+                          <p>Coming Soon...</p>
+                        </div>
+                        <a 
+                          data-fancybox="Coming Soon 2" 
+                          href="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" 
+                          data-caption="
+                          <div>
+                            <a href='http://google.com'>Coming Soon!</a>
+                          </div>">
+                        </a>
+                      </figcaption>	
+                    </figure>
+                  </div>
+                  <div className="grid-item">
+                    <figure className="hover-content">
+                      <img src="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" alt=''/>
+                      <figcaption>
                         <div>
-                          <a href='http://google.com'>Coming Soon!</a>
-                        </div>">
-                      </a>
-                    </figcaption>	
-                  </figure>
-                </div>
-              </Fancybox>
-            </div>
-
+                          <h2>Coming <span>Soon</span></h2>
+                          <p>Coming Soon...</p>
+                        </div>
+                        <a 
+                          data-fancybox="Coming Soon" 
+                          href="https://images.squarespace-cdn.com/content/v1/55ca787ae4b07d9498906d9e/1551490529737-C7C2LZQ8MSFLT8L632H4/coming-soon-neon-sign-coming-soon-badge-in-vector-21133321.jpg" 
+                          data-caption="
+                          <div>
+                            <a href='http://google.com'>Coming Soon!</a>
+                          </div>">
+                        </a>
+                      </figcaption>	
+                    </figure>
+                  </div>
+                </Fancybox>
+              </div>
+            </Fade>
             <section className="section-about">
               <div className="text-zone">
                 <div>
                   <header>
                     <h3 aria-label="Me, Myself and I" className="blast-root">
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>M</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>,</span>
+                      <span className={`${letterClassSecondary} _1`} aria-hidden="true" style={{opacity:"1"}}>M</span>
+                      <span className={`${letterClassSecondary} _2`} aria-hidden="true" style={{opacity:"1"}}>e</span>
+                      <span className={`${letterClassSecondary} _3`} aria-hidden="true" style={{opacity:"1"}}>,</span>
                       &nbsp;
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>M</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>y</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>s</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>l</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>f</span>
+                      <span className={`${letterClassSecondary} _4`} aria-hidden="true" style={{opacity:"1"}}>M</span>
+                      <span className={`${letterClassSecondary} _5`} aria-hidden="true" style={{opacity:"1"}}>y</span>
+                      <span className={`${letterClassSecondary} _6`} aria-hidden="true" style={{opacity:"1"}}>s</span>
+                      <span className={`${letterClassSecondary} _7`} aria-hidden="true" style={{opacity:"1"}}>e</span>
+                      <span className={`${letterClassSecondary} _8`} aria-hidden="true" style={{opacity:"1"}}>l</span>
+                      <span className={`${letterClassSecondary} _9`} aria-hidden="true" style={{opacity:"1"}}>f</span>
                       &nbsp;
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>a</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>n</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>d</span>
+                      <span className={`${letterClassSecondary} _10`} aria-hidden="true" style={{opacity:"1"}}>a</span>
+                      <span className={`${letterClassSecondary} _11`} aria-hidden="true" style={{opacity:"1"}}>n</span>
+                      <span className={`${letterClassSecondary} _12`} aria-hidden="true" style={{opacity:"1"}}>d</span>
                       &nbsp;
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>I</span>
+                      <span className={`${letterClassSecondary} _13`} aria-hidden="true" style={{opacity:"1"}}>I</span>
                     </h3>
                   </header>
-                  <p>
-                  I'm Entry Level Electrical and Electronic Engineer with an inclination towards to programming with a superb work ethic and engineering research background. Adept at determining client needs and meeting project goals. 
-                  <br></br><br></br>
-                  These days my time is spent learning and coding. I also im looking for opportunities to start up my career. I'm open to Job opportunities where I can contribute, learn and grow. If you have a good opportunity that matches my skills and experience then don't hesitate to contact me.
-                  <br></br><br></br>
-                  Out of the office you’ll find me playing games, learning, and automating everything. 
-                  <br></br>
-                  Interested to see more?  Visit 
-                  <a rel="work" href="/my-skills/"> my skills</a> page.
-                  </p>
+                  <Fade bottom>
+                    <p>
+                      I'm Entry Level Electrical and Electronic Engineer with an inclination towards to programming with a superb work ethic and engineering research background. Adept at determining client needs and meeting project goals. 
+                      <br></br><br></br>
+                      These days my time is spent learning and coding. I also im looking for opportunities to start up my career. I'm open to Job opportunities where I can contribute, learn and grow. If you have a good opportunity that matches my skills and experience then don't hesitate to contact me.
+                      <br></br><br></br>
+                      Out of the office you’ll find me playing games, learning, and automating everything. 
+                      <br></br>
+                      Interested to see more?  Visit 
+                      <a rel="work" href="/my-skills/"> my skills</a> page.
+                    </p>
+                  </Fade>
                 </div>
               </div>
               <div className="skill-charts">
@@ -285,67 +384,118 @@ const Index = () => {
             </section>
 
             <section className="section-contact">
-              <div className="fake-big">@</div>
+              <Reveal>
+                <div className="fake-big">@</div>
+              </Reveal>
               <div className="text-zone">
                 <div>
                   <header>
                     <h4 aria-label="Contact Me" className="blast-root">
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>C</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>o</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>n</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>t</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>a</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>c</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>t</span>
+                      <span className={`${letterClassSecondary} _1`} aria-hidden="true" style={{opacity:"1"}}>C</span>
+                      <span className={`${letterClassSecondary} _2`} aria-hidden="true" style={{opacity:"1"}}>o</span>
+                      <span className={`${letterClassSecondary} _3`} aria-hidden="true" style={{opacity:"1"}}>n</span>
+                      <span className={`${letterClassSecondary} _4`} aria-hidden="true" style={{opacity:"1"}}>t</span>
+                      <span className={`${letterClassSecondary} _5`} aria-hidden="true" style={{opacity:"1"}}>a</span>
+                      <span className={`${letterClassSecondary} _6`} aria-hidden="true" style={{opacity:"1"}}>c</span>
+                      <span className={`${letterClassSecondary} _7`} aria-hidden="true" style={{opacity:"1"}}>t</span>
                       &nbsp;
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>M</span>
-                      <span className="blast" aria-hidden="true" style={{opacity:"1"}}>e</span>
+                      <span className={`${letterClassSecondary} _8`} aria-hidden="true" style={{opacity:"1"}}>M</span>
+                      <span className={`${letterClassSecondary} _9`} aria-hidden="true" style={{opacity:"1"}}>e</span>
                     </h4>
                   </header>
+                </div>
+                <Fade bottom>
                   <p>
-                  Looking for an Entry Level Software Engineer position that will enable me to use my strong skills and educational background.
-                  I’m interested for opportunities to start my career, If you have a good opportunity that matches my skills and experience then don't hesitate to contact me.
+                    Looking for an Entry Level Software Engineer position that will enable me to use my strong skills and educational background.
+                    I’m interested for opportunities to start my career, If you have a good opportunity that matches my skills and experience then don't hesitate to contact me.
                   </p>
-                </div>
-                <div className="contact-form">
-                  <form autoComplete="off" ref={formRef} onSubmit={handleSubmit}>
-                  <ul>
-                      <li className= "half animated fadeInUp">
-                        <input type="text" className="text-name split" placeholder="Name" name="user_name" />
-                        <div className="border-box"></div>
-                      </li>
-                      <li className= "half animated fadeInUp required">
-                        <input type="email"className="text-email split" placeholder="Email" name="user_email" />
-                      </li>
-                      
-                      <li className= "animated fadeInUp">
-                        <input type="text" className="text-subject full"  placeholder="Subject" name="user_subject" />
-                      </li >
-                      <textarea className= "animated fadeInUp"  rows="5" placeholder="Message" name="message"/>
-                      <button className="flat-button-2 fadeInUp">
-                        <div>
-                          <span className="bg"></span>
-                          <span className="base"></span>
-                          <span className="text" >Send Message!</span>
-                        </div>
-                      </button>
-                      {done && "Thank you.."}
-                    </ul>
-                  </form>
-                </div>
+                  <div className="contact-form">
+                    <form autoComplete="off" ref={formRef} onSubmit={onSubmit}>
+                      <ul className= "">
+                        <li className= "half">
+                          <input 
+                            autoComplete="off" 
+                            type="text" 
+                            className="text-name" 
+                            placeholder="Name" 
+                            name="name"  
+                            value={validInpt.name}
+                            onChange={handleChange}
+                          />
+                          <BsExclamationLg className="exclamation" />
+                          <BsPatchCheckFill className="checkCircle" />
+                        </li>
+                        <li className= "half">
+                          <input 
+                            autoComplete="false"
+                            ref={emailRef}
+                            type="email"
+                            className="text-email" 
+                            placeholder="Email" 
+                            name="email" 
+                            value={validInpt.email}
+                            onChange={handleChange}
+                          />
+                          <BsExclamationLg className="exclamation" />
+                          <BsPatchCheckFill className="checkCircle" />
+                        </li>
+                        <li>
+                          <input 
+                            autoComplete="false"
+                            type="text" 
+                            className="text-subject full"  
+                            placeholder="Subject" 
+                            name="subject" 
+                            value={validInpt.subject}
+                            onChange={handleChange}
+                          />
+                          <BsExclamationLg className="exclamation" />
+                          <BsPatchCheckFill className="checkCircle" />
+                        </li>
+                        <li>
+                          <textarea 
+                            autoComplete="false"
+                            ref={TextAreaRef}  
+                            type="text"
+                            rows="5" 
+                            placeholder="Message" 
+                            name="message"
+                            value={validInpt.message}
+                            onChange={handleChange}
+                          />
+                          <BsExclamationLg className="exclamation" />
+                          <BsPatchCheckFill className="checkCircle" />
+                        </li>
+                        <button className="flat-button-2" type="submit">
+                          <div>
+                            <span className="bg"></span>
+                            <span className="base"></span>
+                            <span className="text" >
+                              Send Message!
+                            <RiSendPlane2Fill className="message-deliver"/>  
+                            </span>
+                          </div>
+                        </button>
+                        <div ref={MessageRef} className="message"></div> 
+                      </ul>
+                    </form>
+                  </div>
+                </Fade>
               </div>
               <div className="contact-map">
                 <img src={Map} alt="" className="map"/>
-                <div className="inf-map"> 
-                  Kostanstantinos Papakonstantinou,
-                  &nbsp;
-                  Greece, Athens, 188-63 Perama
-                  <br></br>
-                  <span>
-                    <span>@</span>
-                    : kwctas.pap@outlook.com
-                  </span>
-                </div>
+                <Reveal>
+                  <div className="inf-map"> 
+                    Kostanstantinos Papakonstantinou,
+                    &nbsp;
+                    Greece, Athens, 188-63 Perama
+                    <br></br>
+                    <span>
+                      <span>@</span>
+                      : kwctas.pap@outlook.com
+                    </span>
+                  </div>
+                </Reveal>
               </div>
             </section>
             

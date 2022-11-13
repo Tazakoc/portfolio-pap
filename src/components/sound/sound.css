@@ -58,8 +58,23 @@ svg:not(:root) {
   fill: var(--clr-sound-on);
 }
 
+ /* Phones */
 @media screen and (max-width: 800px){
   #sound {
     right: 65vw;
+  }
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1024px){
+  #sound {
+    right: 84vw;
+  }
+}
+
+/* Tablet Portrait  */
+@media (min-width: 768px) and (max-width: 1200px) and (orientation: landscape) {
+  #sound {
+    right: 87vw;
   }
 }

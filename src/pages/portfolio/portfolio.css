@@ -1,7 +1,12 @@
+.grid-bg {
+  position: relative;
+	height: 100vh;
+}
+
 .grid-wall {
   margin: 0px 1px;
   background-color: var(--clr-neutral-800);
-  
+	
   --auto-grid-min-size: 22rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
