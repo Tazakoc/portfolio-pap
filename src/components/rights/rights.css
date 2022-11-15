@@ -1,7 +1,7 @@
 #rights {
   position: relative;
   display: flex;
-  top: 200px;
+  top: 80px;
   float:right;
   overflow:auto;
   right: 5.6rem;
@@ -20,5 +20,27 @@
   .rights-img{
     top: 13vh;
     width: 17%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+  #rights {
+    right: 10vw;
+  }
+
+  .rights-img{
+    top: 10vh;
+    width: 10%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) and (orientation: landscape) {
+  #rights {
+    right: 8vw;
+  }
+
+  .rights-img{
+    top: 10vh;
+    width: 8%;
   }
 }

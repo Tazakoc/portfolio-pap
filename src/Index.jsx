@@ -2,7 +2,7 @@
 import './index.scss'
 
 // Work
-import Fancybox from "./components/portfolio/fancybox.js";
+import Fancybox from "./pages/portfolio/fancybox.js";
 
 // About
 import TagCloud from 'TagCloud'
