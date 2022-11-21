@@ -2,7 +2,6 @@
 import Index from "./Index.jsx"
 import Navbar from "./components/navbar/Navbar"
 import Music from "./components/sound/Sound"
-import Rights from "./components/rights/Rights"
 import Loader from "./components/loader/Loader"
 import Template from "./components/theme-template/Template"
 
@@ -25,7 +24,6 @@ function App() {
       <Router>
         <Navbar/>
         <Music/>
-        <Rights/>
         <Template/>
         <Routes>
           <Route exact path="/" element={
