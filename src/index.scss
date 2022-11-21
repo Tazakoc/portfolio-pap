@@ -1153,7 +1153,7 @@ figure.hover-content:hover p {
   display: none;
 }
 
-/* Contact */
+/* About */
 .section-about {
   position: relative;
   overflow: hidden;
@@ -1534,6 +1534,10 @@ textarea:focus {
   visibility: visible;
 }
 
+.form .error input.text-name,
+.form .error input.text-email,
+.form .error input.text-subject,
+.form .error textarea,
 .error input.text-name,
 .error input.text-email,
 .error input.text-subject,
@@ -1546,6 +1550,10 @@ textarea:focus {
   transition: all 0.3s linear;
 }
 
+.form .success input.text-name,
+.form .success input.text-email,
+.form .success input.text-subject,
+.form .success textarea,
 .success input.text-name,
 .success input.text-email,
 .success input.text-subject,
