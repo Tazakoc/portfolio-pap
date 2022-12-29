@@ -209,7 +209,8 @@ const Contact = () => {
                       className="text-name" 
                       placeholder="Name" 
                       name="name"  
-                      value={validInput.name}
+                      data-testid="Name"
+                      value={validInpt.name}
                       onChange={handleChange}
                     />
                     <BsExclamationLg className="exclamation" />
@@ -281,7 +282,7 @@ const Contact = () => {
             >
             <Marker
               icon={{url: mark}}
-              position= {{lat:37.967130 , lng:23.563870}}
+              position= {{lat:37.966430 , lng:23.569870}}
             ></Marker></GoogleMap>
             <Reveal>
               <div className="inf-map show"> 
@@ -305,7 +306,7 @@ const Contact = () => {
             >
             <Marker
               icon={{url: mark}}
-              position= {{lat:37.967130 , lng:23.563870}}
+              position= {{lat:37.966430 , lng:23.569870}}
             ></Marker></GoogleMap>
             <Reveal>
               <div className="inf-map show"> 

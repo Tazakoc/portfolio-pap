@@ -74,6 +74,11 @@ const About = () => {
     });
   }, []);
 
+  // Age calculation
+  var birthday = new Date('09/17/1995');
+  var today = new Date();
+  var age = today.getFullYear() - birthday.getFullYear();
+  
   return (
     <div className="page-outer">
       <span className="tags top-tags">
@@ -113,14 +118,55 @@ const About = () => {
                   I am looking for an entry level position that will allow me to utilize my strong skills and educational background. I am interested in the whole spectrum of software engineers and to work on ambitious projects with experienced and positive people.
                   <br></br><br></br>
                   <a rel="work" href="/contact-me/">Let’s make something special together.</a>.
-                </p>
-                <a rel="my-cv" href={myCV} className="flat-button">
-                  <div>
-                    <span className="bg"></span>
-                    <span className="base"></span>
-                    <span className="text">Download CV</span>
+                  <div className="personal-info">
+                    <div className='row'>
+                      <div className="column">
+                        <div className="info">
+                          <div>Birthday: <span>17/09/1995</span></div>
+                        </div>
+                        <div className="info">
+                          <div>Website: <span>www.none.com</span></div>
+                        </div>
+                        <div className="info">
+                          <div>Degree: <span>Master</span></div>
+                        </div>
+                        <div className="info">
+                          <div>City: <span>Athens</span></div>
+                        </div>
+                      </div>
+                      <div className="column">
+                        <div className="info">
+                          <div>Age: <span>{age}</span></div>
+                        </div>
+                        <div className="info">
+                          <div>Email: <span>kwctas.pap@outlook.com</span></div>
+                        </div>
+                        <div className="info">
+                          <div>Phone: <span>+30 6959144127</span></div>
+                        </div>
+                        <div className="info">
+                          <div>Freelance: <span>Available</span></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </a>
+                </p>
+                <div className="buttons">
+                  <a rel="my-cv" href={myCV} className="flat-button">
+                    <div>
+                      <span className="bg"></span>
+                      <span className="base"></span>
+                      <span className="text">Download CV</span>
+                    </div>
+                  </a>
+                  <a rel="contact-me" href="/contact-me" className="flat-button">
+                    <div>
+                      <span className="bg"></span>
+                      <span className="base"></span>
+                      <span className="text">Hire me</span>
+                    </div>
+                  </a>
+                </div>
               </Fade>
             </div>
           </div>
