@@ -56,7 +56,7 @@ const Contact = () => {
   }, [])
 
   // Contact
-  const [validInpt, setValidInpt] = useState({
+  const [validInput, setValidInput] = useState({
     name: '',
     email: '',
     subject: '',
@@ -65,7 +65,7 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setValidInpt((preValue) => {
+    setValidInput((preValue) => {
       return { ...preValue, [name]: value }
     })
   }
@@ -122,7 +122,7 @@ const Contact = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     
-    const { email, message } = validInpt
+    const { email, message } = validInput
     // const pattern = /^[^]+@[^]+\.[a-z]{2,3}$/
     const pattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
     if (!email && !message) {
@@ -152,7 +152,7 @@ const Contact = () => {
       }, (error) => {
         console.log(error.text);
       });
-      setValidInpt({
+      setValidInput({
         name: '',
         email: '',
         subject: '',
@@ -224,7 +224,7 @@ const Contact = () => {
                       className="text-email" 
                       placeholder="Email" 
                       name="email" 
-                      value={validInpt.email}
+                      value={validInput.email}
                       onChange={handleChange}
                     />
                     <BsExclamationLg className="exclamation" />
@@ -237,7 +237,7 @@ const Contact = () => {
                       className="text-subject full"  
                       placeholder="Subject" 
                       name="subject" 
-                      value={validInpt.subject}
+                      value={validInput.subject}
                       onChange={handleChange}
                     />
                     <BsExclamationLg className="exclamation" />
@@ -251,7 +251,7 @@ const Contact = () => {
                       rows="5" 
                       placeholder="Message" 
                       name="message"
-                      value={validInpt.message}
+                      value={validInput.message}
                       onChange={handleChange}
                     />
                     <BsExclamationLg className="exclamation" />
@@ -322,7 +322,6 @@ const Contact = () => {
             </Reveal>
           </div>
         </section>
-        <div ref={MessageRef} className="message"></div>
       </div>
       <span className="tags bottom-tags" id='contact-bottom-tags'>
         &lt;/html&gt;

@@ -20,12 +20,7 @@
   --clr-neutral-700 : #181818;
   --clr-neutral-800 : rgba(255, 255, 255, 0.04);
   --clr-neutral-900 : hsl(0 0% 0%);  /* black */
-  /* --fds-dark-mode-gray-35: #CCCCCC;
-  --fds-dark-mode-gray-50: #828282;
-  --fds-dark-mode-gray-70: #4A4A4A;
-  --fds-dark-mode-gray-80: #373737;
-  --fds-dark-mode-gray-90: #282828;
-  --fds-dark-mode-gray-100: #1C1C1C; */
+
   /* Fonts */
   --ff-primary: 'Poppins', sans-serif;
   --ff-tag: 'La Belle Aurore', sans-serif;
@@ -37,7 +32,7 @@
 
   --fs-100: .1rem;
   --fs-200: .2rem;
-  --fs-300: .5rem;
+  --fs-300: .7rem;
   --fs-350: .8rem;
   --fs-400: 1rem;
   --fs-500: 1.2rem;
@@ -365,6 +360,7 @@ body {
   color: var(--clr-primary);
   overflow-y: auto;
   overflow-x: hidden;
+  user-select: none;
 }
 
 .page-outer {
@@ -981,7 +977,8 @@ figure.hover-content h2 {
 }
 
 figure.hover-content p {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--clr-neutral-300);
+	font-size: var(--fs-300);
   opacity: 0;
   -webkit-transition: opacity 0.2s, -webkit-transform 0.35s;
   transition: opacity 0.2s, transform 0.35s;
@@ -1537,7 +1534,11 @@ textarea:focus {
 .error input.text-name,
 .error input.text-email,
 .error input.text-subject,
-.error textarea {
+.error textarea,
+.form .error input.text-name,
+.form .error input.text-email,
+.form .error input.text-subject,
+.form .error textarea {
   border-bottom: 2px solid red;
   transition: all 0.3s linear;
 }
@@ -1549,7 +1550,11 @@ textarea:focus {
 .success input.text-name,
 .success input.text-email,
 .success input.text-subject,
-.success textarea {
+.success textarea,
+.form .success input.text-name,
+.form .success input.text-email,
+.form .success input.text-subject,
+.form .success textarea {
   border-bottom: 2px solid green;
   transition: all 0.3s linear;
 }
