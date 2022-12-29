@@ -331,7 +331,7 @@ button{
 
 .contact .inf-map {
   position: absolute;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--clr-neutral-600);
   top: 3rem;
   right: 2rem;
   z-index: 999999;

@@ -439,7 +439,7 @@ body {
   color: var(--clr-neutral-400);
   font-size: var(--fs-tag);
   position: absolute;
-  margin-top: -1rem;
+  margin-top: -1.2rem;
   left: -1rem;
 }
 
@@ -450,7 +450,7 @@ body {
   font-size: var(--fs-tag);
   position: absolute;
   left: -1rem;
-  bottom: -1.2rem;
+  bottom: -1.5rem;
 }
 
 .section-work h2:before {
@@ -635,7 +635,7 @@ p {
 .section-home .desc {
   font-size: var(--fs-desc);
   letter-spacing: 2px;
-  margin-top: 80px;
+  margin-top: 50px;
   display: block;
   color: var(--clr-neutral-400);
   font-family: var(--ff-primary);
@@ -645,6 +645,10 @@ p {
 .section-home .text-zone p {
   position: relative;
   margin-bottom: 1.5rem;
+}
+
+.section-home .desc .typing{
+  color: var(--clr-accent);
 }
 
 /* Button */
@@ -741,57 +745,46 @@ button {
 /* Scroll */
 .scroll-down {
   position: absolute;
-  right: 20px;
-  padding-top: calc(100vh - 150px);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  font-size: var(--fs-body);
-  color: var(--clr-primary);
-  font-family: var(--ff-primary);
+  width: 60px;
+  padding-top: calc(100vh - 50px);
+  left: 46.5%;
 }
 
-.scroll-down--left {
-  left: 20px;
-  right: auto;
+.scroll-down path {
+	stroke: var(--clr-accent);
+	fill: transparent;
+	stroke-width: 1px;	
+	animation: arrow 2s infinite;
+	-webkit-animation: arrow 2s infinite; 
 }
 
-.scroll-down span {
-  -webkit-writing-mode: vertical-rl;
-  -ms-writing-mode: tb-rl;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  -webkit-animation-name: bounce-1;
-  animation-name: bounce-1;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+@keyframes arrow {
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
 }
 
-.scroll-down svg {
-  margin-top: 10px;
-  width: 10px;
+@-webkit-keyframes arrow {
+0% {opacity:0}
+40% {opacity:1}
+80% {opacity:0}
+100% {opacity:0}
 }
 
-svg:not(:root) {
-  overflow: hidden;
+.scroll-down path.a1 {
+	animation-delay:-1s;
+	-webkit-animation-delay:-1s;
 }
 
-svg {
-  will-change: transform;
+.scroll-down path.a2 {
+	animation-delay:-0.5s;
+	-webkit-animation-delay:-0.5s;
+}
+
+.scroll-down path.a3 {	
+	animation-delay:0s;
+	-webkit-animation-delay:0s;
 }
 
 /* Portfolio */
@@ -1611,7 +1604,7 @@ textarea:focus {
 
 .inf-map {
   position: absolute;
-  background: rgba(0, 0, 0, 0.9);
+  background: var(--clr-neutral-600);
   top: 10rem;
   right: 3rem;
   z-index: 999999;
@@ -1816,7 +1809,7 @@ textarea:focus {
   .section-home .desc {
     top: 2rem;
     margin-top: 2rem;
-  }
+  } 
 
   .flat-button {
     max-width: 160px;

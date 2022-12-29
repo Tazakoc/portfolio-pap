@@ -18,6 +18,7 @@ import { RiSendPlane2Fill } from 'react-icons/ri'
 import DancingLines from './components/dancinglines/dancingLines.js';
 import Reveal from 'react-reveal/Reveal'
 import Fade from 'react-reveal/Fade'
+import Typed from 'typed.js';
 
 const Index = () => {
   
@@ -29,6 +30,33 @@ const Index = () => {
       setLetterClass('blast')
       setLetterClassSecondary('blast')
     }, 4000)
+  }, [])
+
+  // Create reference to store the DOM element containing the animation
+  const el = React.useRef(null);
+  // Create reference to store the Typed instance itself
+  const typed = React.useRef(null);
+
+  React.useEffect(() => {
+    const options = {
+      strings: [
+        'MSc Electrical and Electronic Engineer',
+        'Developer',
+        ''
+      ],
+      typeSpeed: 50,
+      backSpeed: 50,
+      loop: true,
+    };
+    
+    // elRef refers to the <span> rendered below
+    typed.current = new Typed(el.current, options);
+    
+    return () => {
+      // Make sure to destroy Typed instance during cleanup
+      // to prevent memory leaks
+      typed.current.destroy();
+    }
   }, [])
 
   // About
@@ -239,7 +267,8 @@ const Index = () => {
                   <span className={`${letterClass} _27`} aria-hidden="true" style={{opacity:"1"}}>r</span>
                 </h1>
                 <p className="desc">
-                  Msc Electrical & Electronic Engineer
+                  I'am &nbsp;
+                  <span className= 'typing' style={{ whiteSpace: 'pre' }} ref={el} />
                 </p> 
                 <Reveal>
                   <a rel="contact-me" href="/contact-me" className="flat-button">
@@ -252,14 +281,11 @@ const Index = () => {
                 </Reveal>
               </div>
               <DancingLines></DancingLines>
-              <div className="scroll-down">
-                <span>Scroll Down</span>
-                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="svg-inline--fa fa-arrow-down fa-w-14 fa-5x"><path fill="currentColor" d="M443.5 248.5l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L241 419.9V44c0-6.6-5.4-12-12-12h-10c-6.6 0-12 5.4-12 12v375.9L28.5 241.4c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.8 4.8-12.3.1-17z" className=""></path></svg>
-              </div>
-              <div className="scroll-down scroll-down--left">
-                <span>Scroll Down</span>
-                <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="svg-inline--fa fa-arrow-down fa-w-14 fa-5x"><path fill="currentColor" d="M443.5 248.5l-7.1-7.1c-4.7-4.7-12.3-4.7-17 0L241 419.9V44c0-6.6-5.4-12-12-12h-10c-6.6 0-12 5.4-12 12v375.9L28.5 241.4c-4.7-4.7-12.3-4.7-17 0l-7.1 7.1c-4.7 4.7-4.7 12.3 0 17l211 211.1c4.7 4.7 12.3 4.7 17 0l211-211.1c4.8-4.8 4.8-12.3.1-17z" className=""></path></svg>
-              </div>
+              <svg className="scroll-down">
+                <path className="a1" d="M0 0 L30 32 L60 0"></path>
+                <path className="a2" d="M0 20 L30 52 L60 20"></path>
+                <path className="a3" d="M0 40 L30 72 L60 40"></path>
+              </svg>
             </section>
 
             <section className="section-work">

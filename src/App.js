@@ -17,7 +17,7 @@ function App() {
   const About = lazy(() => pMinDelay(import('./pages/about/About'), 5000)); //5000
   const Skills = lazy(() => pMinDelay(import('./pages/skills/Skills'), 5000));
   const Portfolio = lazy(() => pMinDelay(import('./pages/portfolio/Portfolio'), 5000));
-  const Contact = lazy(() => pMinDelay(import('./pages/contact/Contact'), 5000));
+  const Contact = lazy(() => pMinDelay(import('./pages/contact/Contact.jsx'), 5000));
 
   return (
     <div style={{backgroundColor: colorTheme === 'light-mode' ? "var(--clr-primary-bg)" : "var(--clr-primary-bg)"}}>
